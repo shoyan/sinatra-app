@@ -27,7 +27,7 @@ class App < Sinatra::Application
   end
 
 
-  post '/' do
+  post '/memos' do
     @memo = Memo.create(params[:title], params[:body])
     Memos.set_storage(settings.storage)
     Memos.add(@memo)
