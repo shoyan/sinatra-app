@@ -3,11 +3,12 @@
 ## Install
 ```
 $ git clone https://github.com/shoyan/sinatra-app.git
+$ cd sinatra-app
+$ bundle install
 ```
 
 ## Run server
 ```
-$ cd sinatra-app
 $ bundle exec rackup
 ```
 
