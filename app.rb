@@ -1,3 +1,5 @@
+require './app/memo'
+
 class App < Sinatra::Application
   configure do
     set :root, Dir.pwd
@@ -8,8 +10,7 @@ class App < Sinatra::Application
   end
 
   post '/' do
-    @title = params[:title]
-    @body = params[:body]
+    @memo = Memo.create(params[:title], params[:body])
     erb :completed
   end
 end
