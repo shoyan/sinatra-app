@@ -8,7 +8,15 @@ class Memos
   def self.all
     store = PStore.new(@@storage)
     store.transaction do
-      store['memos'] || []
+      store['memos'] || {}
+    end
+  end
+
+  def self.find(id)
+    store = PStore.new(@@storage)
+    store.transaction do
+      memos = store['memos'] || {}
+      memos.select{|k,v| k == id}
     end
   end
 
@@ -16,8 +24,8 @@ class Memos
     store = PStore.new(@@storage)
     store.transaction do
       memos = store['memos']
-      memos = Array.new if memos.nil?
-      memos << memo
+      memos = {} if memos.nil?
+      memos[memo.id] = memo
       store['memos'] = memos
     end
   end
