@@ -6,4 +6,10 @@ class App < Sinatra::Application
   get '/' do
     erb :index
   end
+
+  post '/' do
+    @title = params[:title]
+    @body = params[:body]
+    erb :completed
+  end
 end
