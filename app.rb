@@ -1,4 +1,5 @@
 require './app/memo'
+require './app/memos'
 require 'pstore'
 
 class App < Sinatra::Application
@@ -7,29 +8,20 @@ class App < Sinatra::Application
     set :storage, Dir.pwd + '/storage'
   end
 
-  get '/memo/new' do
+  get '/' do
+    Memos.set_storage(settings.storage)
+    @memos = Memos.all
     erb :index
   end
 
-  get '/' do
-    store = PStore.new(settings.storage)
-
-    @memo = store.transaction do
-      store['memo']
-    end
-
-    erb :completed
+  get '/memo/new' do
+    erb :new
   end
-
 
   post '/' do
     @memo = Memo.create(params[:title], params[:body])
-
-    store = PStore.new(settings.storage)
-    store.transaction do
-      store['memo'] = @memo
-    end
-
+    Memos.set_storage(settings.storage)
+    Memos.add(@memo)
     erb :completed
   end
 end
