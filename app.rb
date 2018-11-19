@@ -13,8 +13,6 @@ class App < Sinatra::Application
   get '/' do
     Memos.set_storage(settings.storage)
     @memos = Memos.all.values
-    p @memos[0].id
-    p @memos[0].title
     erb :index
   end
 
