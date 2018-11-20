@@ -2,7 +2,7 @@ require 'time'
 require 'digest'
 
 class Memo
-  attr_accessor :id, :title, :body, :created_at
+  attr_accessor :id, :title, :body, :created_at, :updated_at
 
   def self.create(title, body, time = Time.now)
     new(title, body, time)
@@ -13,5 +13,13 @@ class Memo
     @title = title
     @body = body
     @created_at = time
+    @updated_at = time
+  end
+
+  def update(params, time = Time.now)
+    @title = params[:title]
+    @body = params[:body]
+    @updated_at = time.to_s
+    self
   end
 end

@@ -26,11 +26,25 @@ class App < Sinatra::Application
     erb :completed
   end
 
+  get '/memos/:id/edit' do
+    Memos.set_storage(settings.storage)
+    @memo = Memos.find(params['id']).values.first
+    erb :edit
+  end
+
   post '/memos' do
     @memo = Memo.create(params[:title], params[:body])
     Memos.set_storage(settings.storage)
     Memos.add(@memo)
     redirect to("/memos/#{@memo.id}")
+  end
+
+  patch '/memos/:id' do
+    Memos.set_storage(settings.storage)
+    @memo = Memos.find(params['id']).values.first
+    @memo.update(params)
+    Memos.add(@memo)
+    erb :completed
   end
 
   delete '/memos/:id' do
