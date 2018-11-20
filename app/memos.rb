@@ -29,4 +29,11 @@ class Memos
       store['memos'] = memos
     end
   end
+
+  def self.delete(id)
+    store = PStore.new(@@storage)
+    store.transaction do
+      store['memos'].delete(id)
+    end
+  end
 end

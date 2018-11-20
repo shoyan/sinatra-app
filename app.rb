@@ -8,11 +8,11 @@ class App < Sinatra::Application
     set :storage, Dir.pwd + '/storage'
   end
 
+  enable :method_override
+
   get '/' do
     Memos.set_storage(settings.storage)
     @memos = Memos.all.values
-    p @memos[0].id
-    p @memos[0].title
     erb :index
   end
 
@@ -26,11 +26,16 @@ class App < Sinatra::Application
     erb :completed
   end
 
-
-  post '/' do
+  post '/memos' do
     @memo = Memo.create(params[:title], params[:body])
     Memos.set_storage(settings.storage)
     Memos.add(@memo)
     redirect to("/memos/#{@memo.id}")
+  end
+
+  delete '/memos/:id' do
+    Memos.set_storage(settings.storage)
+    Memos.delete(params['id'])
+    redirect to('/')
   end
 end

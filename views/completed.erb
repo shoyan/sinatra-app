@@ -5,4 +5,12 @@
   <div>
     <p><%= @memo.body %></p>
   </div>
+  <div>
+    <form action="/memos/<%= @memo.id %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+      <div class="form-group">
+        <input type="submit" value="削除" class="btn btn-danger">
+      </div>
+    </form>
+  </div>
 </div>
