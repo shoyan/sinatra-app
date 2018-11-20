@@ -5,33 +5,42 @@ require 'pstore'
 class App < Sinatra::Application
   configure do
     set :root, Dir.pwd
-    set :storage, Dir.pwd + '/storage'
+
+    # Sets storage path
+    set :storage, Dir.pwd + '/tmp/storage'
   end
 
+  # :method_override - enable/disable the POST _method hack
+  # http://sinatrarb.com/configuration.html
   enable :method_override
 
+  # List memos
   get '/' do
     Memos.set_storage(settings.storage)
     @memos = Memos.all.values
     erb :index
   end
 
+  # Display memo form
   get '/memos/new' do
     erb :new
   end
 
+  # Detail memo
   get '/memos/:id' do
     Memos.set_storage(settings.storage)
     @memo = Memos.find(params['id']).values.first
-    erb :completed
+    erb :detail
   end
 
+  # Edit memo
   get '/memos/:id/edit' do
     Memos.set_storage(settings.storage)
     @memo = Memos.find(params['id']).values.first
     erb :edit
   end
 
+  # Create memo
   post '/memos' do
     @memo = Memo.create(params[:title], params[:body])
     Memos.set_storage(settings.storage)
@@ -39,14 +48,16 @@ class App < Sinatra::Application
     redirect to("/memos/#{@memo.id}")
   end
 
+  # Update memo
   patch '/memos/:id' do
     Memos.set_storage(settings.storage)
     @memo = Memos.find(params['id']).values.first
     @memo.update(params)
     Memos.add(@memo)
-    erb :completed
+    erb :detail
   end
 
+  # Delete memo
   delete '/memos/:id' do
     Memos.set_storage(settings.storage)
     Memos.delete(params['id'])

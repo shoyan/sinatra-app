@@ -1,0 +1,13 @@
+<div class="container">
+  <div>
+    <h1><%= @memo.title %></h1>
+  </div>
+  <div>
+    <p><%= @memo.body %></p>
+  </div>
+  <div>
+    <form action="/memos/<%= @memo.id %>" method="POST">
+      <input type="hidden" name="_method" value="DELETE">
+    </form>
+  </div>
+</div>
