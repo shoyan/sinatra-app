@@ -1,15 +1,19 @@
-<form action="/" method="POST">
-  <div class="container">
-    <div class="form-group">
-      <label for="inputTitle1">タイトル</label>
-      <input type="text" name="title" class="form-control" id="inputTitle1" placeholder="Enter title">
-    </div>
-    <div class="form-group">
-      <label for="inputBody1">本文</label>
-      <textarea name="body" class="form-control" id="inputBody1" rows="5"></textarea>
-    </div>
-    <div class="form-group">
-      <input type="submit" value="送信する" class="btn btn-primary">
-    </div>
-  </div>
-</form>
+<div class="container">
+  <% @memos.each do |memo| %>
+    <section>
+      <header>
+        <h2>
+          <a href="/<%= memo.title %>"><%= memo.title %></a>
+        </h2>
+
+        <time datatime="<%= memo.created_at.to_s %>">
+            <%= memo.created_at.to_s %>
+        </time>
+      </header>
+
+      <div class="body">
+        <%= memo.body %>
+      </div>
+    </section>
+  <% end %>
+</div>
