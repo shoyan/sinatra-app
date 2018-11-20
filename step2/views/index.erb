@@ -1,0 +1,19 @@
+<div class="container">
+  <% @memos.each do |memo| %>
+    <section class="mt-5">
+      <header>
+        <h2>
+          <a href="/memos/<%= memo.id%>"><%= memo.title %></a>
+        </h2>
+
+        <time datatime="<%= memo.created_at.to_s %>">
+            <%= memo.created_at.to_s %>
+        </time>
+      </header>
+
+      <div class="body">
+        <%= memo.body %>
+      </div>
+    </section>
+  <% end %>
+</div>
