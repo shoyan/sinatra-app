@@ -12,7 +12,6 @@ class App < Sinatra::Application
 
   # List memos
   get '/' do
-    p settings.storage
     Memos.set_storage(settings.storage)
     @memos = Memos.all.values
     erb :index
