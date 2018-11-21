@@ -19,7 +19,7 @@ class Memo
   def update(params, time = Time.now)
     @title = params[:title]
     @body = params[:body]
-    @updated_at = time.to_s
+    @updated_at = time
     self
   end
 end
